@@ -10,7 +10,7 @@ bool check(int mid) {
 	int cnt = 1;
 	int money = mid;
 	for (int i = 0; i < v.size(); i++) {
-		if (v[i] > mid) return -1;
+		
 		if (money < v[i]) {
 			cnt++;
 			money = mid;
