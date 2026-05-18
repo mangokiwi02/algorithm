@@ -1,42 +1,41 @@
 #include <iostream>
-#include <string>
 #include <algorithm>
 using namespace std;
-
-int N;
-string seat;
-int arr[104];
-int main() {
-    cin >> N;
-    cin >> seat;
-    for(int i=0; i<N;i++){
-        arr[i] = seat[i] - '0';
+int main(){
+    int n; 
+    cin >> n;
+    string s; 
+    cin >> s;
+    int arr[104];
+    for(int i =0; i<s.size();i++){
+        arr[i] = s[i]-'0';
     }
-    int final_ans = 0; 
-    for(int i = 0; i < N; i++) {
-        if(arr[i] == 1) continue; 
-        for(int j = i + 1; j < N; j++) {
-            if(arr[j] == 1) continue; 
-            arr[i] = 1;
-            arr[j] = 1;
-            int min_dist = 10000; 
-            int prev = -1;
-            for(int k = 0; k < N; k++) {
-                if(arr[k] == 1) {
-                    if(prev != -1) {
-                        int dist = k - prev;
-                        min_dist = min(min_dist, dist); 
+    int ans = 0;
+    for(int i=0; i<s.size();i++){
+        for(int k =0;k<s.size();k++){
+            if(arr[i] == 0 && arr[k] == 0){
+                if(i == k) continue;
+                arr[i] = 1; 
+                arr[k] = 1;
+                bool is_first = true;
+                int prev = 0;
+                int cnt = 1e9;
+                for(int j=0;j<s.size();j++){
+                    if(arr[j] == 1){
+                        if(is_first){
+                            is_first = false;
+                            prev = j;
+                        }else{
+                            cnt = min(cnt,j-prev);
+                            prev = j;
+                        }
                     }
-                    prev = k;
                 }
+                arr[i] = 0;
+                arr[k] = 0;
+                ans = max(ans,cnt);
             }
-            final_ans = max(final_ans, min_dist);
-            arr[i] = 0;
-            arr[j] = 0;
         }
     }
-    
-    cout << final_ans << "\n";
-
-    return 0;
+    cout << ans;
 }
