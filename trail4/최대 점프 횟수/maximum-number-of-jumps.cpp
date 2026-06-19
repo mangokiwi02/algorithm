@@ -1,39 +1,31 @@
 #include <iostream>
 using namespace std;
 
-int dp[1004]; 
-int arr[1004];
 int n;
-void init(){
-    for(int i =0; i<n;i++){
-        dp[i] = -2;
-    }
-}
+int arr[1004];
+int dp[1004];
 
 int check(int a){
-    if(a == 0) return 0;
-    if(dp[a] != -2) return dp[a];
-    int max_jump = -1;
-    for(int i= 0 ; i< a;i++){
-        if(i + arr[i] >= a ){
-            if(check(i) != -1){
-                max_jump = max(max_jump,check(i)+1);
-            }
-        }
+    if(a == n-1) return 0;
+    if(arr[a] == -1) return dp[a];
+    if(dp[a]!= -1e9) return dp[a];
+    int mx = 0;
+    for(int i = a+1; i<=a+arr[a]; i++ ){
+        int past = check(i);
+        if(past!= -1e9) mx = max(past+1,mx);
     }
-    dp[a] = max_jump;
+    dp[a] = mx;
     return dp[a];
 }
-int main() {
+
+int main(){
     cin >> n;
-    init();
-    for(int i =0; i<n;i++){
+    for(int i=0;i<n;i++){
         cin >> arr[i];
     }
-    int ans = 0;
-    for(int i=0; i<n;i++){
-        ans = max(ans,check(i));
+    for(int i=0;i<n;i++){
+        dp[i] = -1e9;
     }
+    int ans = check(0);
     cout << ans;
-    return 0;
 }
