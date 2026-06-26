@@ -1,10 +1,9 @@
 #include <iostream>
 
 using namespace std;
-
-int n;
+const long long MOD = 1000000007;
 long long dp[1004] = {0};
-long long MOD = 1000000007;
+int n;
 const long long check(long long n){
     if(n == 0) return 1;
     if(n == 1) return 2;
@@ -16,9 +15,9 @@ const long long check(long long n){
     }
     return dp[n];
 }
-int main() {
+int main(){
     cin >> n;
-    cout << check(n);
-
-    return 0;
+    long long ans = 0;
+    ans = check(n);
+    cout << ans;
 }
